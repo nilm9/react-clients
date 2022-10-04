@@ -11,6 +11,9 @@ const Form = () => {
 
   const handleSubmit = (e)=>{
     e.preventDefault();
+    if([nombre === 0]){
+      console.log('empty fields');
+    }
     
 
   }
