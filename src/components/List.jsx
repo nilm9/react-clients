@@ -34,7 +34,7 @@ const List = ( {patients}) => {
       
       }
     </div>
-
+// prova
 
   )
 }
