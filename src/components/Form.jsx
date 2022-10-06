@@ -1,19 +1,50 @@
 import React from 'react'
 import { useState } from 'react'
+import ErrorMsg from '../utils/ErrorMsg';
 
-const Form = () => {
+const Form = ({patients, setPatients}) => {
   const [name, setName] = useState('');
   const [pet, setPet] = useState('');
   const [email, setEmail] = useState('');
   const [date, setDate] = useState('');
   const [message, setMessage] = useState('');
-  console.log(name);
+
+  const [error, setError] = useState(false);
+
+  const generateId= () =>{
+      const random = Math.random().toString(36).substring(2);
+      const date = Date.now().toString(36); 
+      return random + date;
+  }
 
   const handleSubmit = (e)=>{
     e.preventDefault();
-    if([nombre === 0]){
-      console.log('empty fields');
+    if([name, pet, email, message ].includes('')){
+      setError(true)
+      return;
     }
+
+
+    const objPatient = {
+      name,
+      pet, 
+      email, 
+      date,
+      message,
+      id:   generateId()
+
+    }
+
+    console.log(objPatient);
+    //Spread operator, copies + adds
+    setPatients([...patients, objPatient])
+    
+    //Reset form
+    setName('');
+    setPet('');
+    setEmail('');
+    setDate('');
+    setMessage('');
     
 
   }
@@ -26,6 +57,7 @@ const Form = () => {
       <h3 className='text-3xl font-semibold text-cyan-100 pb-8 pt-6'>Manage <span className='capitalize text-white'>clients</span> </h3>
 
       <form action="post" className='flex flex-col ' onSubmit={handleSubmit}>
+
         <label className='text-xl font-semibold text-cyan-100 my-2'>Owner's Name</label>
         <input className='my-6 rounded-md p-3 ' type="text" placeholder='Owner' value={name}
         onChange={(e)=>setName(e.target.value)}/>
@@ -44,6 +76,7 @@ const Form = () => {
         <label className='text-xl font-semibold text-cyan-100 mt-3 mb-1'>Pet's Synthoms</label>
         <textarea className='my-6 p-3 rounded-md' name="synthoms" id="synthoms" cols="10" rows="5" placeholder='Synthoms' value={message} onChange={ 
           (e)=>setMessage(e.target.value)} ></textarea>
+        {error && <ErrorMsg text={"All the fields are required"}/> }
         <button type='submit' className='p-2 mt-5 bg-cyan-100 rounded-xl hover:bg-cyan-200 ' onClick={ handleSubmit}>Post</button>
       </form>
 
