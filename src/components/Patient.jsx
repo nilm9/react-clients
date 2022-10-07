@@ -1,8 +1,17 @@
 import React from 'react'
 
-const Patient = ({patients}) => {
-  const {name, date, pet, message, email} = patients
+const Patient = ({patients ,setPatient, deletePatient}) => {
+  const {name, date, pet, message, email, id} = patients
 
+  const handleEliminar = () =>{
+    const resp = confirm("Do you really want to delate the patient?")
+
+    if(resp){
+      deletePatient(id)
+    }
+
+
+  }
 
   return (
     <div className='m-8 px-5 py-10 shadow-md rounded-xl border-2 border-cyan-800'>
@@ -25,6 +34,13 @@ const Patient = ({patients}) => {
       <p className='font-bold mb-3 text-cyan'> 
       Synthomps: {''} <span className='font-normal normal-case'>{message}</span>
       </p>      
+
+      <div className="flex place-content-between">
+
+        <button type="button" className='p-4 bg-cyan-800 hover:bg-cyan-900 text-cyan-100 font-semibold rounded-xl my-2' onClick={()=>setPatient(patients)}> Editar</button>
+        <button type="button" className='p-4 bg-indigo-600 hover:bg-indigo-900 text-cyan-100 font-semibold rounded-xl my-2' onClick={handleEliminar}>Eliminar</button>
+
+      </div>
 
 
 

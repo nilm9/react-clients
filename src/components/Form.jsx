@@ -1,8 +1,8 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import ErrorMsg from '../utils/ErrorMsg';
 
-const Form = ({patients, setPatients}) => {
+const Form = ({patients, setPatients, patient, setPatient}) => {
   const [name, setName] = useState('');
   const [pet, setPet] = useState('');
   const [email, setEmail] = useState('');
@@ -10,6 +10,19 @@ const Form = ({patients, setPatients}) => {
   const [message, setMessage] = useState('');
 
   const [error, setError] = useState(false);
+
+
+  useEffect(() => {
+    
+    if(Object.keys(patient).length > 0){
+      setName(patient.name)
+      setPet(patient.pet)
+      setEmail(patient.email)
+      setDate(patient.date)
+      setMessage(patient.messages)
+    }
+  }, [patient])
+  
 
   const generateId= () =>{
       const random = Math.random().toString(36).substring(2);
@@ -31,13 +44,25 @@ const Form = ({patients, setPatients}) => {
       email, 
       date,
       message,
-      id:   generateId()
 
     }
 
-    console.log(objPatient);
-    //Spread operator, copies + adds
-    setPatients([...patients, objPatient])
+
+
+    if(patient.id){
+      // Edit the register
+      objPatient.id = patient.id
+      const patientsUpdate = patients.map(patientState => patientState.id === patient.id ? objPatient  : patientState)
+      setPatients(patientsUpdate)
+      setPatient({})
+    }else {
+      objPatient.id = generateId();
+      //Spread operator, copies + adds
+      setPatients([...patients, objPatient])
+    }
+
+
+
     
     //Reset form
     setName('');
@@ -77,7 +102,7 @@ const Form = ({patients, setPatients}) => {
         <textarea className='my-6 p-3 rounded-md' name="synthoms" id="synthoms" cols="10" rows="5" placeholder='Synthoms' value={message} onChange={ 
           (e)=>setMessage(e.target.value)} ></textarea>
         {error && <ErrorMsg text={"All the fields are required"}/> }
-        <button type='submit' className='p-2 mt-5 bg-cyan-100 rounded-xl hover:bg-cyan-200 ' onClick={ handleSubmit}>Post</button>
+        <button type='submit' className='p-2 mt-5 bg-cyan-100 rounded-xl hover:bg-cyan-200 font-semibold ' onClick={ handleSubmit}>{patient.id ? 'Edit patient' : 'Add patient'}</button>
       </form>
 
 
