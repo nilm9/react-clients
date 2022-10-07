@@ -37,8 +37,8 @@ const Patient = ({patients ,setPatient, deletePatient}) => {
 
       <div className="flex place-content-between">
 
-        <button type="button" className='p-4 bg-cyan-800 hover:bg-cyan-900 text-cyan-100 font-semibold rounded-xl my-2' onClick={()=>setPatient(patients)}> Editar</button>
-        <button type="button" className='p-4 bg-indigo-600 hover:bg-indigo-900 text-cyan-100 font-semibold rounded-xl my-2' onClick={handleEliminar}>Eliminar</button>
+        <button type="button" className='p-4 bg-cyan-800 hover:bg-cyan-900 text-cyan-100 font-semibold rounded-xl my-2' onClick={()=>setPatient(patients)}> Edit</button>
+        <button type="button" className='p-4 bg-indigo-600 hover:bg-indigo-900 text-cyan-100 font-semibold rounded-xl my-2' onClick={handleEliminar}>Delete</button>
 
       </div>
 
